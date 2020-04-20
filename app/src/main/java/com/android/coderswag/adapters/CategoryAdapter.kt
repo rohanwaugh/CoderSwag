@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageSwitcher
 import android.widget.ImageView
 import android.widget.TextView
 import com.android.coderswag.R
@@ -17,14 +16,26 @@ class CategoryAdapter(private val context: Context, private val categories: List
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        val categoryView = LayoutInflater.from(context).inflate(R.layout.category_list_item, null)
-        val categoryImageView = categoryView.findViewById<ImageView>(R.id.categotyImage)
-        val categoryName = categoryView.findViewById<TextView>(R.id.categoryTitle)
-        categoryName.text = categories[position].title
+        val categoryView: View
+        val viewHolder: CategoryViewHolder
+        if (convertView == null) {
+            categoryView = LayoutInflater.from(context).inflate(R.layout.category_list_item, null)
+            viewHolder = CategoryViewHolder()
+            viewHolder.categoryImageView = categoryView.findViewById<ImageView>(R.id.categotyImage)
+            viewHolder.categoryName = categoryView.findViewById<TextView>(R.id.categoryTitle)
+            categoryView.tag = viewHolder
+        } else {
+            viewHolder = convertView.tag as CategoryViewHolder
+            categoryView = convertView
+        }
+        viewHolder.categoryName?.text = categories[position].title
         val resourceId =
-            context.resources.getIdentifier(categories[position].image, "drawable", context.packageName)
-        Log.d("XYZ",resourceId.toString())
-        categoryImageView.setImageResource(resourceId)
+            context.resources.getIdentifier(
+                categories[position].image,
+                "drawable",
+                context.packageName
+            )
+        viewHolder.categoryImageView?.setImageResource(resourceId)
         return categoryView
     }
 
@@ -38,6 +49,11 @@ class CategoryAdapter(private val context: Context, private val categories: List
 
     override fun getCount(): Int {
         return categories.count()
+    }
+
+    private class CategoryViewHolder {
+        var categoryImageView: ImageView? = null
+        var categoryName: TextView? = null
     }
 
 }
