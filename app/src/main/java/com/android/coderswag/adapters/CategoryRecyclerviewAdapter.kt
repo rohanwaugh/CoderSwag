@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.coderswag.R
 import com.android.coderswag.model.Category
+import com.android.coderswag.utility.DEFTYPE_DRAWABLE
 import kotlinx.android.synthetic.main.category_list_item.view.*
 
 class CategoryRecyclerviewAdapter(
@@ -40,7 +41,7 @@ class CategoryRecyclerviewAdapter(
 
         fun bindCategory(category: Category, context: Context,itemClick: (Category) -> Unit) {
             val resourceId =
-                context.resources.getIdentifier(category.image, "drawable", context.packageName)
+                context.resources.getIdentifier(category.image, DEFTYPE_DRAWABLE, context.packageName)
             categoryImage?.setImageResource(resourceId)
             categoryTitle?.text = category.title
             itemView.setOnClickListener { itemClick(category) }

@@ -1,7 +1,6 @@
 package com.android.coderswag.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.android.coderswag.R
 import com.android.coderswag.model.Category
+import com.android.coderswag.utility.DEFTYPE_DRAWABLE
+
 
 class CategoryAdapter(private val context: Context, private val categories: List<Category>) :
     BaseAdapter() {
@@ -32,7 +33,7 @@ class CategoryAdapter(private val context: Context, private val categories: List
         val resourceId =
             context.resources.getIdentifier(
                 categories[position].image,
-                "drawable",
+                DEFTYPE_DRAWABLE,
                 context.packageName
             )
         viewHolder.categoryImageView?.setImageResource(resourceId)
